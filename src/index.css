@@ -1,0 +1,211 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { 
+    box-sizing: border-box; 
+  }
+  
+  html { 
+    scroll-behavior: smooth; 
+  }
+  
+  body { 
+    @apply font-sans bg-cream text-luxury antialiased; 
+    line-height: 1.6; 
+  }
+  
+  h1, h2, h3, h4, h5, h6 { 
+    @apply font-serif font-normal leading-tight; 
+  }
+  
+  ::-webkit-scrollbar { 
+    width: 8px; 
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track { 
+    @apply bg-champagne; 
+  }
+  
+  ::-webkit-scrollbar-thumb { 
+    @apply bg-gold-light rounded-sm; 
+  }
+  
+  ::-webkit-scrollbar-thumb:hover { 
+    @apply bg-gold; 
+  }
+  
+  img { 
+    @apply block max-w-full h-auto; 
+  }
+  
+  a { 
+    @apply no-underline; 
+  }
+  
+  button {
+    font-family: inherit;
+  }
+}
+
+@layer components {
+  /* Buttons */
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2
+           bg-gold hover:bg-gold-dark text-white
+           px-7 py-3 text-xs font-medium tracking-widest uppercase
+           transition-all duration-300 rounded-sm cursor-pointer border-0
+           hover:-translate-y-px hover:shadow-gold active:translate-y-0;
+  }
+  
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2
+           bg-transparent text-luxury border border-luxury
+           px-7 py-3 text-xs font-medium tracking-widest uppercase
+           transition-all duration-300 rounded-sm cursor-pointer
+           hover:bg-luxury hover:text-white;
+  }
+  
+  .btn-ghost {
+    @apply inline-flex items-center justify-center
+           bg-transparent border-0 cursor-pointer
+           text-luxury transition-colors duration-200
+           hover:text-gold p-2 rounded-sm;
+  }
+
+  /* Cards */
+  .card { 
+    @apply bg-white rounded-sm shadow-soft; 
+  }
+  
+  .product-card {
+    @apply card overflow-hidden cursor-pointer
+           transition-all duration-300
+           hover:-translate-y-1 hover:shadow-hover;
+  }
+  
+  .product-card .product-img { 
+    @apply transition-transform duration-500; 
+  }
+  
+  .product-card:hover .product-img { 
+    @apply scale-105; 
+  }
+
+  /* Typography */
+  .section-label { 
+    @apply text-gold text-xs font-medium tracking-widest uppercase mb-2 block; 
+  }
+  
+  .section-title { 
+    @apply font-serif text-3xl md:text-4xl lg:text-5xl font-light text-luxury; 
+  }
+
+  /* Forms */
+  .input {
+    @apply w-full border border-champagne bg-white text-luxury
+           px-4 py-3 text-sm rounded-sm font-sans
+           transition-colors duration-200 outline-none
+           focus:border-gold placeholder:text-muted;
+  }
+  
+  .label { 
+    @apply block text-xs tracking-widest uppercase text-muted mb-1.5; 
+  }
+
+  /* Navigation */
+  .nav-link {
+    @apply text-xs tracking-wider uppercase text-luxury
+           transition-colors duration-200 cursor-pointer
+           hover:text-gold relative pb-0.5;
+  }
+  
+  .nav-link::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-px bg-gold transition-all duration-300;
+  }
+  
+  .nav-link:hover::after, 
+  .nav-link.active::after { 
+    @apply w-full; 
+  }
+  
+  .nav-link.active { 
+    @apply text-gold; 
+  }
+
+  /* Badges */
+  .badge { 
+    @apply inline-flex items-center px-2.5 py-0.5 text-xs font-semibold tracking-wider uppercase rounded-sm; 
+  }
+  
+  .badge-gold { 
+    @apply bg-gold text-white; 
+  }
+  
+  .badge-sale { 
+    @apply bg-red-500 text-white; 
+  }
+  
+  .badge-new { 
+    @apply bg-luxury text-white; 
+  }
+
+  /* Skeleton Loader */
+  .skeleton {
+    @apply rounded-sm;
+    background: linear-gradient(90deg, #EDE8E0 25%, #F5F3EE 50%, #EDE8E0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  /* Utilities */
+  .divider { 
+    @apply h-px bg-champagne my-6; 
+  }
+
+  /* Tabs */
+  .tab {
+    @apply px-5 py-2.5 text-xs tracking-widest uppercase cursor-pointer
+           border-b-2 border-transparent text-muted
+           transition-all duration-200 font-sans bg-transparent
+           border-t-0 border-l-0 border-r-0;
+  }
+  
+  .tab.active { 
+    @apply text-gold border-b-gold; 
+  }
+
+  /* Filters */
+  .filter-section { 
+    @apply card p-6 mb-4; 
+  }
+  
+  .filter-title { 
+    @apply text-xs tracking-widest uppercase text-muted mb-4 font-medium; 
+  }
+}
+
+@layer utilities {
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* Keyframes */
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
