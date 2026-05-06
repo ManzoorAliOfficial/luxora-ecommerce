@@ -1,42 +1,52 @@
-import { LayoutDashboard, Package, Users, ShoppingCart, Settings } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
-export default function AdminSidebar() {
-  const location = useLocation();
+const NAV = [
+  { id: "overview", label: "Dashboard", icon: "🏠" },
+  { id: "products", label: "Products", icon: "📦" },
+  { id: "orders", label: "Orders", icon: "🛒" },
+  { id: "customers", label: "Customers", icon: "👥" },
+  { id: "analytics", label: "Analytics", icon: "📊" },
+  { id: "settings", label: "Settings", icon: "⚙️" },
+];
 
-  const links = [
-    { icon: LayoutDashboard, label: "Dashboard", path: "/admin" },
-    { icon: Package, label: "Products", path: "/admin/products" },
-    { icon: ShoppingCart, label: "Orders", path: "/admin/orders" },
-    { icon: Users, label: "Customers", path: "/admin/customers" },
-    { icon: Settings, label: "Settings", path: "/admin/settings" },
-  ];
+export default function AdminSidebar({ section, setSection }) {
+  const { logout } = useAuth();
 
   return (
-    <div className="bg-white h-full border-r">
-      <div className="p-6">
-        <h2 className="text-2xl font-display font-bold text-luxury">
-          Admin Panel
-        </h2>
+    <aside className="w-52 bg-luxury text-white flex flex-col shrink-0">
+      <div className="p-5 border-b border-white/10">
+        <Link to="/" className="font-serif text-xl tracking-[0.25em] uppercase text-white">
+          LUXORA
+        </Link>
+        <p className="text-xs text-white/40 mt-1">Admin Panel</p>
       </div>
-      <nav className="px-4 space-y-2">
-        {links.map((link) => {
-          const isActive = location.pathname === link.path;
-          return (
-            <Link
-              key={link.path}
-              to={link.path}
-              className={`
-                flex items-center gap-3 px-4 py-3 rounded-lg transition
-                ${isActive ? "bg-luxury text-white" : "text-gray-700 hover:bg-gray-100"}
-              `}
-            >
-              <link.icon className="h-5 w-5" />
-              <span className="font-medium">{link.label}</span>
-            </Link>
-          );
-        })}
+
+      <nav className="flex-1 py-2">
+        {NAV.map((n) => (
+          <button
+            key={n.id}
+            onClick={() => setSection(n.id)}
+            className={`flex items-center gap-3 w-full px-5 py-3 text-sm text-left cursor-pointer font-sans border-0 transition-all ${
+              section === n.id
+                ? "bg-gold text-white"
+                : "bg-transparent text-white/65 hover:text-white hover:bg-white/5"
+            }`}
+          >
+            <span>{n.icon}</span>
+            {n.label}
+          </button>
+        ))}
       </nav>
-    </div>
+
+      <button
+        onClick={() => {
+          logout();
+        }}
+        className="flex items-center gap-3 px-5 py-4 text-sm text-white/40 hover:text-white border-t border-white/10 cursor-pointer font-sans bg-transparent border-l-0 border-r-0 border-b-0 w-full text-left transition-colors"
+      >
+        🚪 Logout
+      </button>
+    </aside>
   );
 }

@@ -1,46 +1,65 @@
-import { Eye } from "lucide-react";
+const ORDERS = [
+  { id: "#12345", customer: "John Doe", product: "Luxury Handbag", status: "Delivered", amount: 149 },
+  { id: "#12344", customer: "Sarah Smith", product: "Minimal Watch", status: "Shipped", amount: 129 },
+  { id: "#12343", customer: "Mike Brown", product: "White Sneakers", status: "Pending", amount: 89 },
+  { id: "#12342", customer: "Emily Green", product: "Aviator Sunglasses", status: "Delivered", amount: 99 },
+];
 
-export default function OrdersTable() {
-  const orders = [
-    { id: "LX-001234", customer: "John Doe", total: 299.99, status: "Delivered", date: "2024-05-01" },
-    { id: "LX-001235", customer: "Jane Smith", total: 149.50, status: "Processing", date: "2024-05-03" },
-  ];
+const STATUS_STYLE = {
+  Delivered: "bg-green-100 text-green-700",
+  Shipped: "bg-blue-100 text-blue-700",
+  Pending: "bg-orange-100 text-orange-700",
+};
 
-  const statusColors = {
-    Delivered: "bg-green-100 text-green-700",
-    Processing: "bg-blue-100 text-blue-700",
-    Shipped: "bg-purple-100 text-purple-700",
-  };
-
+export default function OrdersTable({ title, showHeader = true, showViewAll, onViewAll }) {
   return (
-    <div className="bg-white rounded-xl border overflow-hidden">
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Order ID</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+    <div className="card overflow-hidden">
+      {showHeader && (
+        <div className="flex justify-between items-center mb-5 p-6 pb-0">
+          <h3 className="text-sm tracking-widest uppercase font-medium">{title}</h3>
+          {showViewAll && (
+            <button
+              onClick={onViewAll}
+              className="text-xs text-gold hover:underline bg-transparent border-0 cursor-pointer font-sans"
+            >
+              View All
+            </button>
+          )}
+        </div>
+      )}
+      <div className={showHeader ? "overflow-x-auto px-6 pb-6" : "overflow-x-auto"}>
+        <table className="w-full text-sm" aria-label="Orders">
+          <thead className={showHeader ? "" : "bg-ivory"}>
+            <tr className="border-b border-champagne">
+              {["Order", "Customer", "Product", "Status", "Amount", "Action"].map((h) => (
+                <th
+                  key={h}
+                  className={`text-left py-3 text-xs tracking-widest uppercase text-muted font-medium ${
+                    showHeader ? "pr-4" : "px-4"
+                  }`}
+                >
+                  {h}
+                </th>
+              ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
-            {orders.map((order) => (
-              <tr key={order.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 text-sm font-medium text-gray-900">{order.id}</td>
-                <td className="px-6 py-4 text-sm text-gray-600">{order.customer}</td>
-                <td className="px-6 py-4 text-sm text-gray-900">${order.total}</td>
-                <td className="px-6 py-4">
-                  <span className={`px-2 py-1 text-xs font-medium rounded ${statusColors[order.status]}`}>
-                    {order.status}
-                  </span>
+          <tbody>
+            {ORDERS.map((o) => (
+              <tr key={o.id} className="border-b border-champagne hover:bg-ivory/50">
+                <td className={`py-3 font-medium ${showHeader ? "pr-4" : "px-4"}`}>{o.id}</td>
+                <td className={`py-3 ${showHeader ? "pr-4" : "px-4"}`}>{o.customer}</td>
+                <td className={`py-3 text-muted text-xs ${showHeader ? "pr-4" : "px-4"}`}>
+                  {o.product}
                 </td>
-                <td className="px-6 py-4 text-sm text-gray-600">{order.date}</td>
-                <td className="px-6 py-4">
-                  <button className="text-blue-600 hover:text-blue-800">
-                    <Eye className="h-4 w-4" />
+                <td className={`py-3 ${showHeader ? "pr-4" : "px-4"}`}>
+                  <span className={`badge ${STATUS_STYLE[o.status] || ""}`}>{o.status}</span>
+                </td>
+                <td className={`py-3 font-semibold ${showHeader ? "pr-4" : "px-4"}`}>
+                  ${o.amount}
+                </td>
+                <td className={`py-3 ${showHeader ? "" : "px-4"}`}>
+                  <button className="text-xs text-gold hover:underline bg-transparent border-0 cursor-pointer font-sans">
+                    View
                   </button>
                 </td>
               </tr>

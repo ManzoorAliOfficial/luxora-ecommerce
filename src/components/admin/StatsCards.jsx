@@ -1,27 +1,21 @@
-import { TrendingUp, ShoppingBag, Users, DollarSign } from "lucide-react";
+const STATS = [
+  { label: "Total Sales", value: "$25,430", change: "+8.2%", icon: "💰" },
+  { label: "Total Orders", value: "320", change: "+5.1%", icon: "📦" },
+  { label: "Customers", value: "1,245", change: "+12.5%", icon: "👥" },
+  { label: "Products", value: "84", change: "+4.7%", icon: "🏷️" },
+];
 
 export default function StatsCards() {
-  const stats = [
-    { icon: DollarSign, label: "Total Revenue", value: "$45,231", change: "+12.5%", trend: "up" },
-    { icon: ShoppingBag, label: "Total Orders", value: "1,234", change: "+8.2%", trend: "up" },
-    { icon: Users, label: "Total Customers", value: "892", change: "+5.7%", trend: "up" },
-    { icon: TrendingUp, label: "Conversion Rate", value: "3.24%", change: "+0.4%", trend: "up" },
-  ];
-
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {stats.map((stat, idx) => (
-        <div key={idx} className="bg-white rounded-xl p-6 border shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 rounded-lg bg-gold/10 flex items-center justify-center">
-              <stat.icon className="h-6 w-6 text-gold" />
-            </div>
-            <span className={`text-sm font-medium ${stat.trend === "up" ? "text-green-600" : "text-red-600"}`}>
-              {stat.change}
-            </span>
+    <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
+      {STATS.map((s) => (
+        <div key={s.label} className="card p-5">
+          <div className="flex justify-between items-start mb-3">
+            <p className="text-xs tracking-widest uppercase text-muted">{s.label}</p>
+            <span className="text-xl">{s.icon}</span>
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-1">{stat.value}</h3>
-          <p className="text-gray-600 text-sm">{stat.label}</p>
+          <p className="text-2xl font-bold mb-1">{s.value}</p>
+          <span className="text-xs text-green-600 font-medium">{s.change} this month</span>
         </div>
       ))}
     </div>

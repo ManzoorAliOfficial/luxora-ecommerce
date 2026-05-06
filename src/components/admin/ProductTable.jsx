@@ -1,52 +1,74 @@
-import { Edit, Trash2 } from "lucide-react";
+import Stars from "../components/common/Stars";
+import { PRODUCTS } from "../data/products";
+import { useStore } from "../context/StoreContext";
 
-export default function ProductTable() {
-  const products = [
-    { id: 1, name: "Luxury Handbag", category: "Bags", price: 149, stock: 12, status: "Active" },
-    { id: 2, name: "Minimal Watch", category: "Accessories", price: 129, stock: 8, status: "Active" },
-  ];
+export default function ProductTable({ setShowAdd }) {
+  const { addToast } = useStore();
 
   return (
-    <div className="bg-white rounded-xl border overflow-hidden">
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Product</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Category</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Price</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Stock</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {products.map((product) => (
-              <tr key={product.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 text-sm font-medium text-gray-900">{product.name}</td>
-                <td className="px-6 py-4 text-sm text-gray-600">{product.category}</td>
-                <td className="px-6 py-4 text-sm text-gray-900">${product.price}</td>
-                <td className="px-6 py-4 text-sm text-gray-600">{product.stock}</td>
-                <td className="px-6 py-4">
-                  <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded">
-                    {product.status}
-                  </span>
-                </td>
-                <td className="px-6 py-4 text-sm">
-                  <div className="flex gap-2">
-                    <button className="text-blue-600 hover:text-blue-800">
-                      <Edit className="h-4 w-4" />
-                    </button>
-                    <button className="text-red-600 hover:text-red-800">
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl font-medium">Products</h2>
+        <button onClick={() => setShowAdd(true)} className="btn-gold py-2.5 px-5">
+          + Add Product
+        </button>
       </div>
-    </div>
+      <div className="card overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm" aria-label="Products">
+            <thead className="bg-ivory">
+              <tr className="border-b border-champagne">
+                {["Product", "Category", "Price", "Stock", "Rating", "Actions"].map((h) => (
+                  <th
+                    key={h}
+                    className="text-left py-3 px-4 text-xs tracking-widest uppercase text-muted font-medium"
+                  >
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {PRODUCTS.map((p) => (
+                <tr
+                  key={p.id}
+                  className="border-b border-champagne hover:bg-ivory/50 transition-colors"
+                >
+                  <td className="py-3 px-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-sm overflow-hidden bg-ivory shrink-0">
+                        <img src={p.image} alt="" className="w-full h-full object-cover" />
+                      </div>
+                      <span className="font-medium text-xs">{p.name}</span>
+                    </div>
+                  </td>
+                  <td className="py-3 px-4 text-muted text-xs">{p.category}</td>
+                  <td className="py-3 px-4 font-medium">${p.price}</td>
+                  <td className="py-3 px-4">
+                    <span className="badge bg-green-100 text-green-700">In Stock</span>
+                  </td>
+                  <td className="py-3 px-4">
+                    <Stars rating={p.rating} size={11} />
+                  </td>
+                  <td className="py-3 px-4">
+                    <div className="flex gap-2">
+                      <button className="text-xs text-gold hover:underline bg-transparent border-0 cursor-pointer font-sans">
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => addToast("Product deleted")}
+                        className="text-xs text-red-500 hover:underline bg-transparent border-0 cursor-pointer font-sans"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </>
   );
 }

@@ -1,33 +1,60 @@
-export default function CustomersTable() {
-  const customers = [
-    { id: 1, name: "John Doe", email: "john@example.com", orders: 5, spent: "$1,249" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com", orders: 3, spent: "$849" },
-  ];
+const CUSTOMERS = [
+  { name: "John Doe", email: "john@example.com", orders: 12, spent: 1430, status: "VIP" },
+  { name: "Sarah Smith", email: "sarah@email.com", orders: 8, spent: 890, status: "Active" },
+  { name: "Mike Brown", email: "mike@mail.com", orders: 3, spent: 340, status: "Active" },
+  { name: "Emily Green", email: "emily@example.com", orders: 15, spent: 2100, status: "VIP" },
+];
 
+export default function CustomersTable() {
   return (
-    <div className="bg-white rounded-xl border overflow-hidden">
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Orders</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total Spent</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {customers.map((customer) => (
-              <tr key={customer.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 text-sm font-medium text-gray-900">{customer.name}</td>
-                <td className="px-6 py-4 text-sm text-gray-600">{customer.email}</td>
-                <td className="px-6 py-4 text-sm text-gray-600">{customer.orders}</td>
-                <td className="px-6 py-4 text-sm font-semibold text-gold">{customer.spent}</td>
+    <>
+      <h2 className="text-xl font-medium mb-6">Customers</h2>
+      <div className="card overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-ivory">
+              <tr className="border-b border-champagne">
+                {["Name", "Email", "Orders", "Spent", "Status"].map((h) => (
+                  <th
+                    key={h}
+                    className="text-left py-3 px-4 text-xs tracking-widest uppercase text-muted font-medium"
+                  >
+                    {h}
+                  </th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {CUSTOMERS.map((c) => (
+                <tr key={c.email} className="border-b border-champagne hover:bg-ivory/50">
+                  <td className="py-3 px-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-champagne flex items-center justify-center text-xs font-semibold shrink-0">
+                        {c.name[0]}
+                      </div>
+                      <span className="font-medium text-sm">{c.name}</span>
+                    </div>
+                  </td>
+                  <td className="py-3 px-4 text-muted text-xs">{c.email}</td>
+                  <td className="py-3 px-4">{c.orders}</td>
+                  <td className="py-3 px-4 font-medium">${c.spent}</td>
+                  <td className="py-3 px-4">
+                    <span
+                      className={`badge ${
+                        c.status === "VIP"
+                          ? "bg-gold/20 text-gold"
+                          : "bg-green-100 text-green-700"
+                      }`}
+                    >
+                      {c.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
