@@ -45,7 +45,7 @@ export default function AdminSidebar({ section, setSection }) {
         }}
         className="flex items-center gap-3 px-5 py-4 text-sm text-white/40 hover:text-white border-t border-white/10 cursor-pointer font-sans bg-transparent border-l-0 border-r-0 border-b-0 w-full text-left transition-colors"
       >
-        🚪 Logout
+         Logout
       </button>
     </aside>
   );
