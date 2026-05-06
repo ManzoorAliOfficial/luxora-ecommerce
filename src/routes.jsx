@@ -11,9 +11,9 @@ import SignupPage    from "./pages/SignupPage";
 import AboutPage     from "./pages/AboutPage";
 import ContactPage   from "./pages/ContactPage";
 import FAQPage       from "./pages/FAQPage";
-// import PrivacyPage   from "./pages/PrivacyPage";
-// import WishlistPage  from "./pages/WishlistPage";
-// import NotFoundPage  from "./pages/NotFoundPage";
+import PrivacyPage   from "./pages/PrivacyPage";
+import WishlistPage  from "./pages/WishlistPage";
+import NotFoundPage  from "./pages/NotFoundPage";
 
 export default function AppRoutes() {
   return (
@@ -30,9 +30,9 @@ export default function AppRoutes() {
       <Route path="/about"       element={<AboutPage />} />
       <Route path="/contact"     element={<ContactPage />} />
       <Route path="/faq"         element={<FAQPage />} />
-      {/* <Route path="/privacy"     element={<PrivacyPage />} /> */}
-      {/* <Route path="/wishlist"    element={<WishlistPage />} /> */}
-      {/* <Route path="*"            element={<NotFoundPage />} /> */}
+      <Route path="/privacy"     element={<PrivacyPage />} />
+      <Route path="/wishlist"    element={<WishlistPage />} />
+      <Route path="*"            element={<NotFoundPage />} />
     </Routes>
   );
 }

@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-
 import SEO from "../components/common/SEO";
 import Breadcrumb from "../components/common/Breadcrumb";
 import Reveal from "../components/common/Reveal";
-
 import { useStore } from "../context/StoreContext";
 import {
   COUPON_CODES,
@@ -85,7 +83,7 @@ export default function CartPage() {
         url="/cart"
       />
 
-      {/* 🔥 HEADER */}
+      {/* HEADER */}
       <Reveal>
         <div className="bg-ivory pt-28 pb-10 px-4 sm:px-6">
           <div className="max-w-screen-xl mx-auto">
@@ -102,7 +100,7 @@ export default function CartPage() {
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-          {/* 🔥 CART ITEMS */}
+          {/* CART ITEMS */}
           <motion.div
             className="lg:col-span-2"
             variants={container}
@@ -193,7 +191,7 @@ export default function CartPage() {
             </div>
           </motion.div>
 
-          {/* 🔥 SUMMARY */}
+          {/* SUMMARY */}
           <Reveal delay={0.2}>
             <div className="space-y-4">
 

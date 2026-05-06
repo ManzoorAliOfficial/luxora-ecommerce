@@ -22,7 +22,7 @@ export default function AboutPage() {
 
       {/* Hero */}
       <section className="relative min-h-80 flex items-end overflow-hidden pt-24">
-        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1400&q=80"
+        <img src=""
              alt="LUXORA store" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-luxury/60" />
         <div className="relative z-10 max-w-screen-xl mx-auto px-4 sm:px-6 pb-16 w-full">
@@ -48,7 +48,7 @@ export default function AboutPage() {
             <Link to="/shop" className="btn-gold">Shop the Collection</Link>
           </div>
           <div className="rounded-sm overflow-hidden" style={{ aspectRatio: "4/5" }}>
-            <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=700&q=80"
+            <img src="https://images.unsplash.com/photo-1644785997826-ba863c69a25e?q=80&w=659&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                  alt="LUXORA fashion" className="w-full h-full object-cover" loading="lazy" />
           </div>
         </div>
