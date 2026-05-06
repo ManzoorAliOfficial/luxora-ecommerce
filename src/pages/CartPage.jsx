@@ -11,7 +11,7 @@ import {
   SHIPPING_COST,
 } from "../data/constants";
 
-// 🔥 Stagger Animation
+//  Stagger Animation
 const container = {
   show: {
     transition: {

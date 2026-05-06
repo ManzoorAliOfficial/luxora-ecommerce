@@ -269,6 +269,7 @@ export default function AdminPage() {
           )}
         </main>
       </div>
+      
 
       {/* Add Product Modal */}
       {showAdd && (
@@ -307,6 +308,7 @@ export default function AdminPage() {
           </div>
         </div>
       )}
+      
     </>
   );
 }

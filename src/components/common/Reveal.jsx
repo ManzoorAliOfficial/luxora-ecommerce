@@ -1,12 +1,17 @@
 import { motion } from "framer-motion";
 
-export default function Reveal({ children, delay = 0 }) {
+export default function Reveal({ children, delay = 0, y = 22 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 70 }}
+      initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay }}
-      viewport={{ once: true }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{
+        duration: 0.55,
+        delay,
+        ease: [0.22, 1, 0.36, 1], 
+      }}
+      style={{ willChange: "transform, opacity" }}
     >
       {children}
     </motion.div>
