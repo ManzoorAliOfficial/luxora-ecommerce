@@ -1,32 +1,53 @@
-import { Plus, Minus } from "lucide-react";
-
-export default function QuantitySelector({ quantity, onChange, min = 1, max = 99 }) {
-  const decrement = () => {
-    if (quantity > min) onChange(quantity - 1);
-  };
-
-  const increment = () => {
-    if (quantity < max) onChange(quantity + 1);
-  };
-
+export default function QuantitySelector({ qty, onChange, min = 1, max = 99 }) {
   return (
-    <div>
-      <h3 className="text-sm font-medium text-gray-900 mb-3">Quantity</h3>
-      <div className="inline-flex items-center border-2 border-gray-300 rounded-lg">
+    <div className="mb-6">
+      <p className="label">Quantity</p>
+      <div className="flex items-center border border-champagne rounded-sm w-fit mt-2">
+
+        {/* Decrease */}
         <button
-          onClick={decrement}
-          className="p-3 hover:bg-gray-100 transition disabled:opacity-50"
-          disabled={quantity <= min}
+          onClick={() => onChange(Math.max(min, qty - 1))}
+          disabled={qty <= min}
+          aria-label="Decrease quantity"
+          className="px-4 py-3 hover:text-gold transition-colors border-0 bg-transparent cursor-pointer disabled:opacity-40"
         >
-          <Minus className="h-5 w-5" />
+          <svg
+            className="w-3.5 h-3.5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
         </button>
-        <span className="px-6 font-semibold text-lg">{quantity}</span>
-        <button
-          onClick={increment}
-          className="p-3 hover:bg-gray-100 transition disabled:opacity-50"
-          disabled={quantity >= max}
+
+        {/* Count */}
+        <span
+          className="px-6 py-3 text-sm font-medium border-x border-champagne min-w-14 text-center"
+          aria-live="polite"
+          aria-label={`Quantity: ${qty}`}
         >
-          <Plus className="h-5 w-5" />
+          {qty}
+        </span>
+
+        {/* Increase */}
+        <button
+          onClick={() => onChange(Math.min(max, qty + 1))}
+          disabled={qty >= max}
+          aria-label="Increase quantity"
+          className="px-4 py-3 hover:text-gold transition-colors border-0 bg-transparent cursor-pointer disabled:opacity-40"
+        >
+          <svg
+            className="w-3.5 h-3.5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5"  y1="12" x2="19" y2="12" />
+          </svg>
         </button>
       </div>
     </div>

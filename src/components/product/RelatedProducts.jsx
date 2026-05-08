@@ -1,21 +1,36 @@
-import { PRODUCTS } from "../../data/products";
-import ProductCard from "../home/ProductCard";
+import { useState }   from "react";
+import ProductCard    from "../shop/ProductCard";
+import QuickViewModal from "../shop/QuickViewModal";
 
-export default function RelatedProducts({ currentProduct }) {
-  const related = PRODUCTS
-    .filter(p => p.category === currentProduct.category && p.id !== currentProduct.id)
-    .slice(0, 4);
+export default function RelatedProducts({ products = [] }) {
+  const [qv, setQv] = useState(null);
 
-  if (related.length === 0) return null;
+  if (products.length === 0) return null;
 
   return (
-    <div className="mt-16">
-      <h2 className="text-2xl font-bold mb-8">You May Also Like</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {related.map((product) => (
-          <ProductCard key={product.id} product={product} />
+    <section aria-label="Related products">
+
+      {/* Header */}
+      <div className="text-center mb-10">
+        <p className="section-label">You May Also Like</p>
+        <h2 className="section-title">Related Products</h2>
+      </div>
+
+      {/* Grid — matches exactly the 4-col layout from ProductPage */}
+      <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-5">
+        {products.map(p => (
+          <ProductCard
+            key={p.id}
+            product={p}
+            onQuickView={setQv}
+          />
         ))}
       </div>
-    </div>
+
+      {/* Quick view modal */}
+      {qv && (
+        <QuickViewModal product={qv} onClose={() => setQv(null)} />
+      )}
+    </section>
   );
 }

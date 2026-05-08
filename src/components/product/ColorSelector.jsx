@@ -1,27 +1,23 @@
-import { Check } from "lucide-react";
-
-export default function ColorSelector({ colors, selected, onChange }) {
+export default function ColorSelector({ colors = [], selected, onChange }) {
   if (!colors || colors.length === 0) return null;
 
   return (
-    <div>
-      <h3 className="text-sm font-medium text-gray-900 mb-3">Color</h3>
-      <div className="flex gap-2">
-        {colors.map((color, idx) => (
+    <div className="mb-5">
+      <p className="label">Color</p>
+      <div className="flex gap-2 mt-2">
+        {colors.map(c => (
           <button
-            key={idx}
-            onClick={() => onChange(color)}
-            className={`
-              w-10 h-10 rounded-full border-2 flex items-center justify-center
-              transition-all duration-200
-              ${selected === color ? "border-gray-900 scale-110" : "border-gray-300"}
-            `}
-            style={{ backgroundColor: color }}
-          >
-            {selected === color && (
-              <Check className="h-5 w-5 text-white drop-shadow-md" />
-            )}
-          </button>
+            key={c}
+            onClick={() => onChange(c)}
+            aria-label={`Color ${c}`}
+            aria-pressed={selected === c}
+            className="w-8 h-8 rounded-full transition-all cursor-pointer border-0 shrink-0"
+            style={{
+              background:    c,
+              outline:       `2px solid ${selected === c ? "#C9A84C" : "#EDE8E0"}`,
+              outlineOffset: "2px",
+            }}
+          />
         ))}
       </div>
     </div>

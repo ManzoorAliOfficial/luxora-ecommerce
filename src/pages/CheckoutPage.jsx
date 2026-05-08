@@ -3,6 +3,7 @@ import { Link }      from "react-router-dom";
 import SEO           from "../components/common/SEO";
 import { useStore }  from "../context/StoreContext";
 import { SHIPPING_COST, FREE_SHIPPING_THRESHOLD } from "../data/constants";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 const STEPS = ["Billing", "Payment", "Confirm"];
 
@@ -145,10 +146,24 @@ export default function CheckoutPage() {
                   <svg className="w-4 h-4 text-gold shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                   SSL Encrypted · Secure Checkout · 100% Money Back Guarantee
                 </div>
-                <div className="flex gap-3">
-                  <button onClick={prevStep} className="btn-outline">← Back</button>
-                  <button onClick={placeOrder} className="btn-gold">Place Order →</button>
-                </div>
+<div className="flex gap-3 ">
+  <button 
+    onClick={prevStep} 
+    className="btn-outline flex capitalize items-center gap-1 text-base group"
+  >
+    <ArrowLeft className="w-[1.3em] h-[1.3em] transition-transform group-hover:-translate-x-1" />
+    <span>Back</span>
+  </button>
+
+  <button 
+    onClick={placeOrder} 
+    className="btn-gold flex items-center capitalize gap-1 text-base group"
+  >
+    <span>Place Order</span>
+    <ArrowRight className="w-[1.3em] h-[1.3em] transition-transform group-hover:translate-x-1" />
+  </button>
+</div>
+
               </div>
             )}
           </div>

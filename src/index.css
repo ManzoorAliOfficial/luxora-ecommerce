@@ -25,6 +25,7 @@
     height: 8px;
   }
   
+  
   ::-webkit-scrollbar-track { 
     @apply bg-champagne; 
   }

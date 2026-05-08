@@ -1,3 +1,4 @@
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function PromoBanner() {
@@ -22,9 +23,13 @@ export default function PromoBanner() {
             <div className="absolute inset-0 bg-luxury/45" />
             <div className="relative z-10 p-6 flex flex-col justify-end h-full min-h-32">
               <h3 className="font-serif text-2xl text-white mb-3">New Arrivals</h3>
-              <Link to="/shop?sort=newest" className="text-white/90 text-xs tracking-widest uppercase hover:text-gold transition-colors">
-                Explore Now →
-              </Link>
+              <Link 
+  to="/shop?sort=newest" 
+  className="text-white/90 text-xl tracking-widest  hover:text-gold transition-colors flex items-center gap-1"
+>
+  Explore Now 
+  <ArrowRight className="w-[1em] h-[1em]" />
+</Link>
             </div>
           </div>
           <div className="bg-luxury rounded-sm p-6 flex items-center justify-between gap-4 flex-wrap">
