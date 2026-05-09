@@ -14,6 +14,7 @@ import {
   Linkedin,
 } from "lucide-react";
 import { useState } from "react";
+import PaymentMethods from "./PaymentMethods";
 
 const LINKS = {
   "Quick Links": [
@@ -166,22 +167,8 @@ export default function Footer() {
             <p className="text-xs order-2 lg:order-1">
               © {new Date().getFullYear()} LUXORA. All Rights Reserved.
             </p>
-
-            {/* Payment Methods */}
-            <div className="order-1 lg:order-2 flex items-center gap-2">
-              <span className="text-xs mr-2 text-white/50">We Accept:</span>
-              {PAYMENT_METHODS.map(({ name, icon: Icon }) => (
-                <div
-                  key={name}
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-white/5 border border-white/20 rounded text-white/60 hover:border-gold hover:text-gold transition-all"
-                  title={name}
-                >
-                  <Icon size={16} />
-                  <span className="text-xs font-medium">{name}</span>
-                </div>
-              ))}
-            </div>
-
+                <PaymentMethods/>
+    
             {/* Legal Links */}
             <div className="order-3 flex gap-6 text-xs">
               <Link
