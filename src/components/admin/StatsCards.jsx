@@ -1,8 +1,8 @@
 const STATS = [
-  { label: "Total Sales", value: "$25,430", change: "+8.2%", icon: "💰" },
-  { label: "Total Orders", value: "320", change: "+5.1%", icon: "📦" },
-  { label: "Customers", value: "1,245", change: "+12.5%", icon: "👥" },
-  { label: "Products", value: "84", change: "+4.7%", icon: "🏷️" },
+  { label: "Total Sales",  value: "$25,430", change: "+8.2%",  icon: "💰" },
+  { label: "Total Orders", value: "320",     change: "+5.1%",  icon: "📦" },
+  { label: "Customers",    value: "1,245",   change: "+12.5%", icon: "👥" },
+  { label: "Products",     value: "84",      change: "+4.7%",  icon: "🏷️" },
 ];
 
 export default function StatsCards() {

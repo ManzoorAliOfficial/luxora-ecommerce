@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 const NAV = [
-  { id: "overview", label: "Dashboard", icon: "🏠" },
-  { id: "products", label: "Products", icon: "📦" },
-  { id: "orders", label: "Orders", icon: "🛒" },
+  { id: "overview",  label: "Dashboard", icon: "🏠" },
+  { id: "products",  label: "Products",  icon: "📦" },
+  { id: "orders",    label: "Orders",    icon: "🛒" },
   { id: "customers", label: "Customers", icon: "👥" },
   { id: "analytics", label: "Analytics", icon: "📊" },
-  { id: "settings", label: "Settings", icon: "⚙️" },
+  { id: "settings",  label: "Settings",  icon: "⚙️" },
 ];
 
 export default function AdminSidebar({ section, setSection }) {
@@ -40,12 +40,10 @@ export default function AdminSidebar({ section, setSection }) {
       </nav>
 
       <button
-        onClick={() => {
-          logout();
-        }}
+        onClick={logout}
         className="flex items-center gap-3 px-5 py-4 text-sm text-white/40 hover:text-white border-t border-white/10 cursor-pointer font-sans bg-transparent border-l-0 border-r-0 border-b-0 w-full text-left transition-colors"
       >
-         Logout
+        🚪 Logout
       </button>
     </aside>
   );

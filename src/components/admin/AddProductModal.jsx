@@ -1,54 +1,86 @@
-import { useState } from "react";
-import Modal from "../common/Modal";
-import Input from "../common/Input";
+import { useStore } from "../../context/StoreContext";
 
-export default function AddProductModal({ isOpen, onClose }) {
-  const [formData, setFormData] = useState({
-    name: "",
-    category: "",
-    price: "",
-    stock: "",
-  });
+/**
+ * Props:
+ *   open: boolean       — controls visibility
+ *   onClose: fn         — called when modal should close
+ */
+export default function AddProductModal({ open, onClose }) {
+  const { addToast } = useStore();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add product logic
+  if (!open) return null;
+
+  const handleAdd = () => {
+    addToast("Product added!");
     onClose();
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Add New Product">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
-          label="Product Name"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          required
-        />
-        <Input
-          label="Category"
-          value={formData.category}
-          onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-          required
-        />
-        <Input
-          label="Price"
-          type="number"
-          value={formData.price}
-          onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-          required
-        />
-        <Input
-          label="Stock"
-          type="number"
-          value={formData.stock}
-          onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
-          required
-        />
-        <button type="submit" className="btn-primary w-full">
-          Add Product
-        </button>
-      </form>
-    </Modal>
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-sm shadow-card max-w-md w-full p-6 animate-fade-in"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex justify-between items-center mb-5">
+          <h3 className="text-sm tracking-widest uppercase font-medium">Add New Product</h3>
+          <button onClick={onClose} className="btn-ghost">✕</button>
+        </div>
+
+        <div className="space-y-3">
+          <div>
+            <label className="label">Product Name</label>
+            <input placeholder="e.g. Luxury Handbag" className="input" />
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="label">Price ($)</label>
+              <input type="number" placeholder="149" className="input" />
+            </div>
+            <div>
+              <label className="label">Old Price ($)</label>
+              <input type="number" placeholder="189" className="input" />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="label">Category</label>
+              <select className="input">
+                {["Women", "Men", "Shoes", "Bags", "Accessories"].map((c) => (
+                  <option key={c}>{c}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="label">Badge</label>
+              <select className="input">
+                <option>None</option>
+                <option>New</option>
+                <option>Sale</option>
+                <option>-20%</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label className="label">Image URL</label>
+            <input placeholder="https://..." className="input" />
+          </div>
+        </div>
+
+        <div className="flex gap-3 mt-5">
+          <button className="btn-gold" onClick={handleAdd}>
+            Add Product
+          </button>
+          <button className="btn-outline" onClick={onClose}>
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }

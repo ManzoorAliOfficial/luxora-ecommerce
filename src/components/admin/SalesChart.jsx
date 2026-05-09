@@ -1,16 +1,10 @@
 const SALES_DATA = [
-  { month: "Jan", sales: 8200 },
-  { month: "Feb", sales: 11500 },
-  { month: "Mar", sales: 9800 },
-  { month: "Apr", sales: 14200 },
-  { month: "May", sales: 12100 },
-  { month: "Jun", sales: 16800 },
-  { month: "Jul", sales: 15200 },
-  { month: "Aug", sales: 18500 },
-  { month: "Sep", sales: 17100 },
-  { month: "Oct", sales: 21200 },
-  { month: "Nov", sales: 23100 },
-  { month: "Dec", sales: 25430 },
+  { month: "Jan", sales: 8200  }, { month: "Feb", sales: 11500 },
+  { month: "Mar", sales: 9800  }, { month: "Apr", sales: 14200 },
+  { month: "May", sales: 12100 }, { month: "Jun", sales: 16800 },
+  { month: "Jul", sales: 15200 }, { month: "Aug", sales: 18500 },
+  { month: "Sep", sales: 17100 }, { month: "Oct", sales: 21200 },
+  { month: "Nov", sales: 23100 }, { month: "Dec", sales: 25430 },
 ];
 
 export default function SalesChart() {

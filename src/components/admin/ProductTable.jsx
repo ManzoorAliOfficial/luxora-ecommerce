@@ -1,18 +1,19 @@
-import Stars from "../components/common/Stars";
-import { PRODUCTS } from "../data/products";
-import { useStore } from "../context/StoreContext";
+import Stars from "../../components/common/Stars";
+import { PRODUCTS } from "../../data/products";
+import { useStore } from "../../context/StoreContext";
 
-export default function ProductTable({ setShowAdd }) {
+export default function ProductTable({ onAddProduct }) {
   const { addToast } = useStore();
 
   return (
     <>
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-medium">Products</h2>
-        <button onClick={() => setShowAdd(true)} className="btn-gold py-2.5 px-5">
+        <button onClick={onAddProduct} className="btn-gold py-2.5 px-5">
           + Add Product
         </button>
       </div>
+
       <div className="card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm" aria-label="Products">
