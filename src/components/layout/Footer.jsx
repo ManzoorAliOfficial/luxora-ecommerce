@@ -1,200 +1,172 @@
-import { Link } from "react-router-dom";
-import {
-  CreditCard,
-  Wallet,
-  BadgeDollarSign,
-  Smartphone,
-  Mail,
-  Phone,
-  MapPin,
-  Send,
-  Instagram,
-  Facebook,
-  Twitter,
-  Linkedin,
-} from "lucide-react";
 import { useState } from "react";
-import PaymentMethods from "./PaymentMethods";
+import { Link }      from "react-router-dom";
 
 const LINKS = {
-  "Quick Links": [
-    { l: "Home", to: "/" },
-    { l: "Shop", to: "/shop" },
-    { l: "About", to: "/about" },
-    { l: "Blog", to: "/blog" },
+  Shop: [
+    { label: "New Arrivals",  to: "/shop?sort=newest"          },
+    { label: "Best Sellers",  to: "/shop?sort=popularity"      },
+    { label: "Sale",          to: "/shop?category=Sale"        },
+    { label: "Handbags",      to: "/shop?category=Handbags"    },
+    { label: "Watches",       to: "/shop?category=Watches"     },
+    { label: "Accessories",   to: "/shop?category=Accessories" },
   ],
-
-  "Customer Service": [
-    { l: "Shipping Policy", to: "/shipping" },
-    { l: "Returns & Exchanges", to: "/returns" },
-    { l: "FAQ", to: "/faq" },
-    { l: "Track Order", to: "/track" },
+  Help: [
+    { label: "FAQs",              to: "/faqs"           },
+    { label: "Shipping & Returns",to: "/shipping"       },
+    { label: "Track Your Order",  to: "/account"        },
+    { label: "Size Guide",        to: "/size-guide"     },
+    { label: "Contact Us",        to: "/contact"        },
   ],
-
-  "My Account": [
-    { l: "My Orders", to: "/account/orders" },
-    { l: "Wishlist", to: "/wishlist" },
-    { l: "Account Details", to: "/account/profile" },
-    { l: "Addresses", to: "/account/addresses" },
+  Company: [
+    { label: "About LUXORA", to: "/about"   },
+    { label: "Careers",      to: "/careers" },
+    { label: "Press",        to: "/press"   },
+    { label: "Sustainability",to: "/sustainability" },
+    { label: "Privacy Policy",to: "/privacy" },
+    { label: "Terms of Use", to: "/terms"   },
   ],
 };
 
-const SOCIAL_LINKS = [
-  { name: "Instagram", icon: Instagram, href: "https://instagram.com/luxora" },
-  { name: "Facebook", icon: Facebook, href: "https://facebook.com/luxora" },
-  { name: "Twitter", icon: Twitter, href: "https://twitter.com/luxora" },
-  { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com/company/luxora" },
+const SOCIALS = [
+  {
+    label: "Instagram",
+    href:  "https://instagram.com",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+      </svg>
+    ),
+  },
+  {
+    label: "Pinterest",
+    href:  "https://pinterest.com",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
+        <path d="M12 2C6.477 2 2 6.477 2 12c0 4.236 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.181-.78 1.172-4.97 1.172-4.97s-.299-.598-.299-1.482c0-1.388.806-2.428 1.808-2.428.853 0 1.267.64 1.267 1.408 0 .858-.546 2.14-.828 3.33-.236.995.498 1.806 1.476 1.806 1.772 0 3.135-1.867 3.135-4.56 0-2.385-1.714-4.052-4.163-4.052-2.836 0-4.5 2.127-4.5 4.326 0 .856.33 1.775.741 2.276a.3.3 0 0 1 .069.286c-.076.314-.244.995-.277 1.134-.044.183-.146.222-.337.134-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.966-.527-2.292-1.148l-.623 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S17.523 2 12 2z"/>
+      </svg>
+    ),
+  },
+  {
+    label: "Facebook",
+    href:  "https://facebook.com",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
+        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+      </svg>
+    ),
+  },
+  {
+    label: "TikTok",
+    href:  "https://tiktok.com",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
+        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
+      </svg>
+    ),
+  },
 ];
 
-const PAYMENT_METHODS = [
-  { name: "VISA", icon: CreditCard },
-  { name: "Mastercard", icon: Wallet },
-  { name: "PayPal", icon: BadgeDollarSign },
-  { name: "Apple Pay", icon: Smartphone },
-];
+const PAYMENT_ICONS = ["Visa", "Mastercard", "Amex", "PayPal", "Apple Pay"];
 
 export default function Footer() {
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
+  const [email,     setEmail]     = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
-
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    if (!email) return;
+    setSubmitted(true);
+    setEmail("");
+  };
 
   return (
-    <footer className="bg-luxury text-white/70" role="contentinfo">
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6">
-        
-        
-        {/* Main Footer Content */}
-        <div className="py-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+    <footer className="bg-luxury text-white/80">
 
-            {/* Brand & Contact */}
-            <div className="lg:col-span-2">
-              <Link
-                to="/"
-                className="font-serif text-3xl tracking-[0.3em] uppercase text-white block mb-4"
-              >
-                LUXORA
-              </Link>
+    
 
-              <p className="text-sm leading-relaxed mb-6 max-w-sm">
-                Premium luxury fashion for the discerning individual. 
-                Experience unparalleled quality, comfort, and elegance 
-                in every piece.
-              </p>
+      {/* Main footer grid */}
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 py-14">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
 
-              {/* Contact Information */}
-              <div className="space-y-3 mb-6 text-sm">
-                <a 
-                  href="tel:+1-800-LUXORA" 
-                  className="flex items-center gap-3 hover:text-gold transition-colors group"
+          {/* Brand column */}
+          <div className="lg:col-span-2">
+            <Link to="/" className="font-serif text-2xl tracking-[0.3em] text-white uppercase">
+              LUXORA
+            </Link>
+            <p className="text-sm text-white/50 mt-4 leading-relaxed max-w-xs">
+              Luxury fashion and accessories curated for the discerning few. Timeless elegance, delivered worldwide.
+            </p>
+
+            {/* Socials */}
+            <div className="flex gap-3 mt-6">
+              {SOCIALS.map(s => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  className="w-9 h-9 border border-white/20 rounded-sm flex items-center justify-center text-white/50 hover:text-gold hover:border-gold transition-all"
                 >
-                  <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-gold/10 transition-colors">
-                    <Phone size={14} className="group-hover:text-gold transition-colors" />
-                  </div>
-                  <span>+1 (800) LUXORA</span>
+                  {s.icon}
                 </a>
-
-                <a 
-                  href="mailto:support@luxora.com" 
-                  className="flex items-center gap-3 hover:text-gold transition-colors group"
-                >
-                  <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-gold/10 transition-colors">
-                    <Mail size={14} className="group-hover:text-gold transition-colors" />
-                  </div>
-                  <span>support@luxora.com</span>
-                </a>
-
-                <div className="flex items-center gap-3 group">
-                  <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
-                    <MapPin size={14} />
-                  </div>
-                  <span>New York, NY 10001</span>
-                </div>
-              </div>
-
-              {/* Social Media */}
-              <div>
-                <h3 className="text-white text-xs font-medium tracking-widest uppercase mb-3">
-                  Follow Us
-                </h3>
-                <div className="flex gap-2">
-                  {SOCIAL_LINKS.map(({ name, icon: Icon, href }) => (
-                    <a
-                      key={name}
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Follow us on ${name}`}
-                      className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:text-gold hover:border-gold hover:bg-gold/5 transition-all"
-                    >
-                      <Icon size={18} />
-                    </a>
-                  ))}
-                </div>
-              </div>
+              ))}
             </div>
 
-            {/* Footer Navigation Links */}
-            {Object.entries(LINKS).map(([title, items]) => (
-              <nav key={title} aria-label={title}>
-                <h3 className="text-white text-xs font-medium tracking-widest uppercase mb-5">
-                  {title}
-                </h3>
+            {/* Trust badges */}
+            <div className="flex flex-wrap gap-4 mt-8 text-xs text-white/40">
+              {[["🔒","Secure Checkout"],["🚚","Free Shipping $100+"],["🔄","30-Day Returns"]].map(([icon, text]) => (
+                <div key={text} className="flex items-center gap-1.5">
+                  <span>{icon}</span><span>{text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
 
-                <ul className="space-y-3">
-                  {items.map((item) => (
-                    <li key={item.l}>
-                      <Link
-                        to={item.to}
-                        className="text-sm hover:text-gold transition-colors inline-block"
-                      >
-                        {item.l}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
+          {/* Link columns */}
+          {Object.entries(LINKS).map(([heading, links]) => (
+            <div key={heading}>
+              <p className="text-xs tracking-widest uppercase text-white font-medium mb-5">{heading}</p>
+              <ul className="space-y-3">
+                {links.map(l => (
+                  <li key={l.label}>
+                    <Link
+                      to={l.to}
+                      className="text-sm text-white/50 hover:text-gold transition-colors"
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Bottom bar */}
+      <div className="border-t border-white/10">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-white/30">
+            © {new Date().getFullYear()} LUXORA. All rights reserved.
+          </p>
+
+          {/* Payment icons */}
+          <div className="flex items-center gap-2">
+            {PAYMENT_ICONS.map(p => (
+              <span
+                key={p}
+                className="text-[10px] text-white/30 border border-white/10 px-2 py-1 rounded-sm tracking-wide"
+              >
+                {p}
+              </span>
             ))}
           </div>
         </div>
-
-        {/* Bottom Footer */}
-        <div className="border-t border-white/10 py-6">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-5">
-            
-            {/* Copyright */}
-            <p className="text-xs order-2 lg:order-1">
-              © {new Date().getFullYear()} LUXORA. All Rights Reserved.
-            </p>
-                <PaymentMethods/>
-    
-            {/* Legal Links */}
-            <div className="order-3 flex gap-6 text-xs">
-              <Link
-                to="/privacy"
-                className="hover:text-gold transition-colors"
-              >
-                Privacy Policy
-              </Link>
-
-              <Link
-                to="/terms"
-                className="hover:text-gold transition-colors"
-              >
-                Terms of Service
-              </Link>
-
-              <Link
-                to="/accessibility"
-                className="hover:text-gold transition-colors"
-              >
-                Accessibility
-              </Link>
-            </div>
-          </div>
-        </div>
       </div>
+
     </footer>
   );
 }

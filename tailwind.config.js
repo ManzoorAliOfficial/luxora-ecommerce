@@ -7,14 +7,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Base colors
         ivory: '#FAF8F5',
         cream: '#FAF8F5',
         champagne: '#EDE8E0',
         luxury: '#1A1A1A',
         muted: '#6B6B6B',
-        
-        // Gold variants
         gold: {
           DEFAULT: '#C9A84C',
           light: '#E5D29A',
@@ -32,11 +29,16 @@ export default {
       },
       animation: {
         shimmer: 'shimmer 1.5s infinite',
+        scroll: 'scroll 20s linear infinite',
       },
       keyframes: {
         shimmer: {
           '0%': { backgroundPosition: '200% 0' },
           '100%': { backgroundPosition: '-200% 0' },
+        },
+        scroll: {
+          '0%':   { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-25%)' },
         },
       },
     },

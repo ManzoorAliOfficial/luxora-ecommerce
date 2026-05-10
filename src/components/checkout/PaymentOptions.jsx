@@ -1,76 +1,93 @@
-import { CreditCard, Wallet } from "lucide-react";
 import { useState } from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
-export default function PaymentOptions({ onSubmit }) {
-  const [method, setMethod] = useState("card");
+const METHODS = [
+  { id: "cod",    label: "Cash on Delivery",     desc: "Pay when you receive your order" },
+  { id: "card",   label: "Credit / Debit Card",  desc: "Visa, Mastercard, Amex" },
+  { id: "stripe", label: "Stripe",               desc: "Pay securely via Stripe" },
+];
 
-  const paymentMethods = [
-    { id: "card", name: "Credit Card", icon: CreditCard },
-    { id: "paypal", name: "PayPal", icon: Wallet },
-  ];
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(method);
-  };
+export default function PaymentOptions({ onBack, onPlace }) {
+  const [payment, setPayment] = useState("cod");
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="space-y-3">
-        {paymentMethods.map((pm) => (
+    <div className="card p-6 sm:p-8">
+      <h2 className="text-sm tracking-widest uppercase font-medium mb-6">
+        Payment Method
+      </h2>
+
+      {/* Method list */}
+      <div className="space-y-3 mb-6">
+        {METHODS.map(m => (
           <label
-            key={pm.id}
-            className={`
-              flex items-center gap-4 p-4 border-2 rounded-lg cursor-pointer
-              transition-all duration-200
-              ${method === pm.id
+            key={m.id}
+            className={`flex items-center gap-3 p-4 border rounded-sm cursor-pointer transition-all ${
+              payment === m.id
                 ? "border-gold bg-gold/5"
-                : "border-gray-200 hover:border-gray-300"
-              }
-            `}
+                : "border-champagne hover:border-gold/50"
+            }`}
           >
             <input
               type="radio"
               name="payment"
-              value={pm.id}
-              checked={method === pm.id}
-              onChange={(e) => setMethod(e.target.value)}
-              className="w-5 h-5"
+              value={m.id}
+              checked={payment === m.id}
+              onChange={() => setPayment(m.id)}
+              className="accent-gold w-4 h-4 shrink-0"
             />
-            <pm.icon className="h-6 w-6 text-gray-600" />
-            <span className="font-medium text-gray-900">{pm.name}</span>
+            <div>
+              <p className="text-sm font-medium">{m.label}</p>
+              <p className="text-xs text-muted">{m.desc}</p>
+            </div>
           </label>
         ))}
       </div>
 
-      {method === "card" && (
-        <div className="space-y-4 pt-4">
-          <input
-            type="text"
-            placeholder="Card Number"
-            className="input w-full"
-            required
-          />
-          <div className="grid grid-cols-2 gap-4">
-            <input
-              type="text"
-              placeholder="MM/YY"
-              className="input"
-              required
-            />
-            <input
-              type="text"
-              placeholder="CVV"
-              className="input"
-              required
-            />
+      {/* Card fields */}
+      {payment === "card" && (
+        <div className="p-4 bg-ivory rounded-sm space-y-3 mb-6">
+          <div>
+            <label className="label">Card Number</label>
+            <input placeholder="1234 5678 9012 3456" className="input" />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="label">Expiry</label>
+              <input placeholder="MM/YY" className="input" />
+            </div>
+            <div>
+              <label className="label">CVV</label>
+              <input placeholder="123" className="input" />
+            </div>
           </div>
         </div>
       )}
 
-      <button type="submit" className="btn-primary w-full">
-        Place Order
-      </button>
-    </form>
+      {/* Trust line */}
+      <div className="flex items-center gap-2 mb-5 text-xs text-muted">
+        <svg className="w-4 h-4 text-gold shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </svg>
+        SSL Encrypted · Secure Checkout · 100% Money Back Guarantee
+      </div>
+
+      {/* Actions */}
+      <div className="flex gap-3">
+        <button
+          onClick={onBack}
+          className="btn-outline flex capitalize items-center gap-1 text-base group"
+        >
+          <ArrowLeft className="w-[1.3em] h-[1.3em] transition-transform group-hover:-translate-x-1" />
+          <span>Back</span>
+        </button>
+        <button
+          onClick={onPlace}
+          className="btn-gold flex items-center capitalize gap-1 text-base group"
+        >
+          <span>Place Order</span>
+          <ArrowRight className="w-[1.3em] h-[1.3em] transition-transform group-hover:translate-x-1" />
+        </button>
+      </div>
+    </div>
   );
 }

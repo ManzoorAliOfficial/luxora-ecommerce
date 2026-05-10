@@ -1,15 +1,10 @@
-export default function SizeSelector({ sizes = [], selected, onChange }) {
-  if (!sizes || sizes.length === 0) return null;
+export default function SizeSelector({ sizes, selected, onChange }) {
+  if (!sizes?.length) return null;
 
   return (
     <div className="mb-5">
-      <div className="flex justify-between items-center mb-2">
-        <p className="label mb-0">Size</p>
-        <button className="text-xs text-gold hover:underline bg-transparent border-0 cursor-pointer font-sans">
-          Size Guide
-        </button>
-      </div>
-      <div className="flex flex-wrap gap-2">
+      <p className="label">Size</p>
+      <div className="flex flex-wrap gap-2 mt-2">
         {sizes.map(s => (
           <button
             key={s}

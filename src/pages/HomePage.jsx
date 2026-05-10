@@ -7,7 +7,7 @@ import PromoBanner  from "../components/home/PromoBanner";
 import NewArrivals  from "../components/home/NewArrivals";
 import Testimonials from "../components/home/Testimonials";
 import Newsletter   from "../components/home/Newsletter";
-
+import TrustBadges from "../components/home/TrustBadges";
 export default function HomePage() {
   return (
     <>
@@ -25,6 +25,10 @@ export default function HomePage() {
       <Reveal delay={0.4}><NewArrivals /></Reveal>
       <Reveal delay={0.5}><Testimonials /></Reveal>
       <Reveal delay={0.6}><Newsletter /></Reveal>
+      <Reveal delay={0.6}><TrustBadges /></Reveal>
+      
+
+
     </>
   );
 }

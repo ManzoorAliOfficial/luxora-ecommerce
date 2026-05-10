@@ -1,26 +1,42 @@
-import { Package, Heart, ShoppingBag, DollarSign } from "lucide-react";
+import { useStore } from "../../context/StoreContext";
+import OrderHistory from "./OrderHistory";
+
+const STATS = [
+  { label: "Total Orders", value: 12,     icon: "📦" },
+  { label: "Addresses",    value: 3,       icon: "📍" },
+  { label: "Balance",      value: "$150",  icon: "💳" },
+];
 
 export default function DashboardStats() {
+  const { wishlist } = useStore();
+
   const stats = [
-    { icon: Package, label: "Total Orders", value: "12", color: "text-blue-600", bg: "bg-blue-100" },
-    { icon: Heart, label: "Wishlist Items", value: "8", color: "text-red-600", bg: "bg-red-100" },
-    { icon: ShoppingBag, label: "In Cart", value: "3", color: "text-green-600", bg: "bg-green-100" },
-    { icon: DollarSign, label: "Total Spent", value: "$1,249", color: "text-gold", bg: "bg-gold/10" },
+    STATS[0],
+    { label: "Wishlist", value: wishlist.length, icon: "♥" },
+    STATS[1],
+    STATS[2],
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-      {stats.map((stat, idx) => (
-        <div key={idx} className="bg-white rounded-xl p-6 border hover:shadow-md transition">
-          <div className="flex items-center justify-between mb-4">
-            <div className={`w-12 h-12 rounded-lg ${stat.bg} flex items-center justify-center`}>
-              <stat.icon className={`h-6 w-6 ${stat.color}`} />
+    <div>
+      {/* Stat cards */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        {stats.map(s => (
+          <div key={s.label} className="card p-5">
+            <div className="flex justify-between items-start mb-3">
+              <p className="text-xs tracking-widest uppercase text-muted">{s.label}</p>
+              <span className="text-xl">{s.icon}</span>
             </div>
+            <p className="text-2xl font-semibold">{s.value}</p>
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-1">{stat.value}</h3>
-          <p className="text-gray-600">{stat.label}</p>
-        </div>
-      ))}
+        ))}
+      </div>
+
+      {/* Recent orders preview */}
+      <div className="card p-6">
+        <h3 className="text-xs tracking-widest uppercase font-medium mb-5">Recent Orders</h3>
+        <OrderHistory showItems={false} />
+      </div>
     </div>
   );
 }

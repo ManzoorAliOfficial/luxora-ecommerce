@@ -1,45 +1,55 @@
-import { User, Package, Heart, MapPin, Settings, LogOut } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
-export default function DashboardSidebar() {
-  const location = useLocation();
+const TABS = [
+  { id: "overview",  icon: "🏠", label: "Dashboard"        },
+  { id: "orders",    icon: "📦", label: "My Orders"         },
+  { id: "wishlist",  icon: "♥",  label: "Wishlist"          },
+  { id: "addresses", icon: "📍", label: "Addresses"         },
+  { id: "settings",  icon: "⚙️", label: "Account Settings"  },
+];
 
-  const links = [
-    { icon: User, label: "Profile", path: "/dashboard" },
-    { icon: Package, label: "Orders", path: "/dashboard/orders" },
-    { icon: Heart, label: "Wishlist", path: "/dashboard/wishlist" },
-    { icon: MapPin, label: "Addresses", path: "/dashboard/addresses" },
-    { icon: Settings, label: "Settings", path: "/dashboard/settings" },
-  ];
+export default function DashboardSidebar({ activeTab, onTabChange }) {
+  const { user, logout } = useAuth();
+
+  const name   = user?.name   || "John Doe";
+  const email  = user?.email  || "john@example.com";
+  const avatar = user?.avatar || "JD";
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-sm border">
-      <h2 className="text-xl font-bold mb-6">My Account</h2>
-      <nav className="space-y-2">
-        {links.map((link) => {
-          const isActive = location.pathname === link.path;
-          return (
-            <Link
-              key={link.path}
-              to={link.path}
-              className={`
-                flex items-center gap-3 px-4 py-3 rounded-lg transition
-                ${isActive
-                  ? "bg-gold text-white"
-                  : "text-gray-700 hover:bg-gray-100"
-                }
-              `}
-            >
-              <link.icon className="h-5 w-5" />
-              <span className="font-medium">{link.label}</span>
-            </Link>
-          );
-        })}
-        <button className="flex items-center gap-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 transition w-full">
-          <LogOut className="h-5 w-5" />
-          <span className="font-medium">Logout</span>
+    <aside className="lg:w-60 shrink-0">
+      <div className="card overflow-hidden">
+        {/* Avatar */}
+        <div className="p-6 bg-ivory text-center">
+          <div className="w-16 h-16 rounded-full bg-gold flex items-center justify-center text-white text-xl font-semibold mx-auto mb-3">
+            {avatar}
+          </div>
+          <p className="font-medium text-sm">{name}</p>
+          <p className="text-xs text-muted">{email}</p>
+        </div>
+
+        {/* Nav tabs */}
+        {TABS.map(t => (
+          <button
+            key={t.id}
+            onClick={() => onTabChange(t.id)}
+            className={`flex items-center gap-3 px-5 py-3.5 w-full text-left text-sm border-t border-champagne transition-colors cursor-pointer font-sans bg-transparent border-l-0 border-r-0 border-b-0 ${
+              activeTab === t.id ? "text-gold bg-gold/5" : "text-luxury hover:text-gold"
+            }`}
+            style={{ borderLeft: activeTab === t.id ? "3px solid #C9A84C" : "3px solid transparent" }}
+          >
+            <span>{t.icon}</span>{t.label}
+          </button>
+        ))}
+
+        {/* Logout */}
+        <button
+          onClick={logout}
+          className="flex items-center gap-3 px-5 py-3.5 w-full text-left text-sm border-t border-champagne text-muted hover:text-red-500 transition-colors cursor-pointer font-sans bg-transparent border-l-0 border-r-0 border-b-0"
+          style={{ borderLeft: "3px solid transparent" }}
+        >
+          🚪 Logout
         </button>
-      </nav>
-    </div>
+      </div>
+    </aside>
   );
 }

@@ -1,109 +1,64 @@
-import { useState } from "react";
-import Input from "../common/Input";
-import Select from "../common/Select";
+const FIELDS = [
+  ["firstName", "First Name",     "John"],
+  ["lastName",  "Last Name",      "Doe"],
+  ["email",     "Email Address",  "john@example.com"],
+  ["phone",     "Phone Number",   "+1 234 567 8900"],
+  ["city",      "City",           "New York"],
+  ["zip",       "ZIP Code",       "10001"],
+];
 
-export default function BillingForm({ onSubmit }) {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    address: "",
-    city: "",
-    state: "",
-    zip: "",
-    country: "US",
-  });
+const COUNTRIES = [
+  "United States", "United Kingdom", "Canada",
+  "Australia", "Pakistan", "India",
+];
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(formData);
-  };
-
-  const states = [
-    { value: "", label: "Select State" },
-    { value: "CA", label: "California" },
-    { value: "NY", label: "New York" },
-    { value: "TX", label: "Texas" },
-  ];
+export default function BillingForm({ form, onChange, onNext }) {
+  const set = (key, value) => onChange({ ...form, [key]: value });
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Input
-          label="First Name"
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleChange}
-          required
-        />
-        <Input
-          label="Last Name"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
-          required
-        />
+    <div className="card p-6 sm:p-8">
+      <h2 className="text-sm tracking-widest uppercase font-medium mb-6">
+        Billing Details
+      </h2>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {FIELDS.map(([key, label, ph]) => (
+          <div key={key}>
+            <label className="label">{label}</label>
+            <input
+              value={form[key]}
+              onChange={e => set(key, e.target.value)}
+              placeholder={ph}
+              className="input"
+            />
+          </div>
+        ))}
+
+        <div className="sm:col-span-2">
+          <label className="label">Street Address</label>
+          <input
+            value={form.address}
+            onChange={e => set("address", e.target.value)}
+            placeholder="123 Main Street, Apt 4B"
+            className="input"
+          />
+        </div>
+
+        <div>
+          <label className="label">Country</label>
+          <select
+            value={form.country}
+            onChange={e => set("country", e.target.value)}
+            className="input"
+          >
+            {COUNTRIES.map(c => <option key={c}>{c}</option>)}
+          </select>
+        </div>
       </div>
 
-      <Input
-        label="Email"
-        type="email"
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
-        required
-      />
-
-      <Input
-        label="Phone"
-        type="tel"
-        name="phone"
-        value={formData.phone}
-        onChange={handleChange}
-        required
-      />
-
-      <Input
-        label="Address"
-        name="address"
-        value={formData.address}
-        onChange={handleChange}
-        required
-      />
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Input
-          label="City"
-          name="city"
-          value={formData.city}
-          onChange={handleChange}
-          required
-        />
-        <Select
-          label="State"
-          name="state"
-          options={states}
-          value={formData.state}
-          onChange={handleChange}
-          required
-        />
-        <Input
-          label="ZIP Code"
-          name="zip"
-          value={formData.zip}
-          onChange={handleChange}
-          required
-        />
-      </div>
-
-      <button type="submit" className="btn-primary w-full">
-        Continue to Payment
+      <button onClick={onNext} className="btn-gold mt-6">
+        Continue to Payment →
       </button>
-    </form>
+    </div>
   );
 }

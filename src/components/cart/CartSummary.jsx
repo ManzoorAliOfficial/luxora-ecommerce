@@ -1,44 +1,57 @@
 import { Link } from "react-router-dom";
 import { useStore } from "../../context/StoreContext";
+import { FREE_SHIPPING_THRESHOLD, SHIPPING_COST } from "../../data/constants";
+import Reveal from "../common/Reveal";
+import CouponInput from "./CouponInput";
+import { useState } from "react";
 
 export default function CartSummary() {
   const { cartTotal } = useStore();
-  const shipping = cartTotal > 100 ? 0 : 10;
-  const tax = cartTotal * 0.1;
-  const total = cartTotal + shipping + tax;
+  const [discount, setDiscount] = useState(0);
+
+  const shipping   = cartTotal > FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
+  const discounted = cartTotal * (1 - discount);
+  const total      = discounted + shipping;
 
   return (
-    <div className="bg-gray-50 rounded-2xl p-6">
-      <h2 className="text-xl font-semibold mb-6">Order Summary</h2>
+    <Reveal delay={0.2}>
+      <div className="space-y-4">
+        <CouponInput onApply={setDiscount} />
 
-      <div className="space-y-3 mb-6">
-        <div className="flex justify-between text-gray-700">
-          <span>Subtotal</span>
-          <span>${cartTotal.toFixed(2)}</span>
-        </div>
-        <div className="flex justify-between text-gray-700">
-          <span>Shipping</span>
-          <span>{shipping === 0 ? "FREE" : `$${shipping.toFixed(2)}`}</span>
-        </div>
-        <div className="flex justify-between text-gray-700">
-          <span>Tax</span>
-          <span>${tax.toFixed(2)}</span>
-        </div>
-        <div className="border-t pt-3 flex justify-between text-lg font-semibold">
-          <span>Total</span>
-          <span className="text-gold">${total.toFixed(2)}</span>
+        <div className="card p-6">
+          <h3 className="mb-4">Order Summary</h3>
+          <div className="space-y-2 text-sm text-muted">
+            <div className="flex justify-between">
+              <span>Subtotal</span>
+              <span className="text-luxury font-medium">${cartTotal.toFixed(2)}</span>
+            </div>
+            {discount > 0 && (
+              <div className="flex justify-between text-gold">
+                <span>Discount ({discount * 100}%)</span>
+                <span>-${(cartTotal * discount).toFixed(2)}</span>
+              </div>
+            )}
+            <div className="flex justify-between">
+              <span>Shipping</span>
+              <span className="text-luxury font-medium">
+                {shipping === 0 ? "Free" : `$${shipping}`}
+              </span>
+            </div>
+            <div className="h-px bg-champagne my-2" />
+            <div className="flex justify-between text-base font-semibold text-luxury">
+              <span>Total</span>
+              <span>${total.toFixed(2)}</span>
+            </div>
+          </div>
+
+          <Link
+            to="/checkout"
+            className="btn-gold w-full mt-6 block text-center"
+          >
+            Checkout
+          </Link>
         </div>
       </div>
-
-      <Link to="/checkout" className="btn-primary w-full">
-        Proceed to Checkout
-      </Link>
-
-      {cartTotal < 100 && (
-        <p className="text-sm text-center mt-4 text-gray-500">
-          Add ${(100 - cartTotal).toFixed(2)} more for free shipping
-        </p>
-      )}
-    </div>
+    </Reveal>
   );
 }

@@ -1,71 +1,53 @@
-import { Package, ChevronRight } from "lucide-react";
-import { Link } from "react-router-dom";
+const ORDERS = [
+  { id: "#12345", date: "May 1, 2026",  status: "Delivered", total: 149, items: 1 },
+  { id: "#12344", date: "Apr 28, 2026", status: "Shipped",   total: 129, items: 2 },
+  { id: "#12343", date: "Apr 15, 2026", status: "Delivered", total: 89,  items: 1 },
+];
 
-export default function OrderHistory() {
-  const orders = [
-    {
-      id: "LX-001234",
-      date: "2024-05-01",
-      status: "Delivered",
-      total: 299.99,
-      items: 3,
-    },
-    {
-      id: "LX-001235",
-      date: "2024-05-03",
-      status: "Processing",
-      total: 149.50,
-      items: 2,
-    },
-  ];
+const STATUS_STYLE = {
+  Delivered: "bg-green-100 text-green-700",
+  Shipped:   "bg-blue-100 text-blue-700",
+  Pending:   "bg-orange-100 text-orange-700",
+};
 
-  const statusColors = {
-    Delivered: "bg-green-100 text-green-700",
-    Processing: "bg-blue-100 text-blue-700",
-    Shipped: "bg-purple-100 text-purple-700",
-    Cancelled: "bg-red-100 text-red-700",
-  };
+// showItems=false → used in the overview summary (no Items column)
+// showItems=true  → used in the full Orders tab
+export default function OrderHistory({ showItems = true }) {
+  const headers = showItems
+    ? ["Order", "Date", "Items", "Status", "Total", "Action"]
+    : ["Order", "Date", "Status", "Total", "Action"];
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-6">Order History</h2>
-
-      <div className="space-y-4">
-        {orders.map((order) => (
-          <div
-            key={order.id}
-            className="bg-white rounded-xl p-6 border hover:shadow-md transition"
-          >
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <Package className="h-5 w-5 text-gray-400" />
-                <div>
-                  <h3 className="font-semibold text-gray-900">{order.id}</h3>
-                  <p className="text-sm text-gray-500">{order.date}</p>
-                </div>
-              </div>
-              <span className={`px-3 py-1 rounded-full text-sm font-medium ${statusColors[order.status]}`}>
-                {order.status}
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-600">
-                  {order.items} items • Total: <span className="font-semibold text-gold">${order.total}</span>
-                </p>
-              </div>
-              <Link
-                to={`/dashboard/orders/${order.id}`}
-                className="flex items-center gap-1 text-gold hover:underline"
-              >
-                View Details
-                <ChevronRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </div>
-        ))}
-      </div>
+    <div className="overflow-x-auto">
+      <table className="w-full text-sm" aria-label="Orders">
+        <thead>
+          <tr className="border-b border-champagne">
+            {headers.map(h => (
+              <th key={h} className="text-left pb-3 text-xs tracking-widest uppercase text-muted font-medium pr-4">
+                {h}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {ORDERS.map(o => (
+            <tr key={o.id} className="border-b border-champagne">
+              <td className="py-3.5 pr-4 font-medium">{o.id}</td>
+              <td className="py-3.5 pr-4 text-muted">{o.date}</td>
+              {showItems && <td className="py-3.5 pr-4">{o.items}</td>}
+              <td className="py-3.5 pr-4">
+                <span className={`badge ${STATUS_STYLE[o.status] || ""}`}>{o.status}</span>
+              </td>
+              <td className="py-3.5 pr-4 font-medium">${o.total}</td>
+              <td className="py-3.5">
+                <button className="text-xs text-gold hover:underline bg-transparent border-0 cursor-pointer font-sans">
+                  View
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
