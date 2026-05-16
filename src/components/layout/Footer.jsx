@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link }      from "react-router-dom";
+import { Lock, Truck, RotateCcw } from 'lucide-react';
 
 const LINKS = {
   Shop: [
@@ -68,6 +69,12 @@ const SOCIALS = [
   },
 ];
 
+const TRUST_BADGES = [
+  { icon: Lock,      text: "Secure Checkout"      },
+  { icon: Truck,     text: "Free Shipping $100+"  },
+  { icon: RotateCcw, text: "30-Day Returns"       },
+];
+
 const PAYMENT_ICONS = ["Visa", "Mastercard", "Amex", "PayPal", "Apple Pay"];
 
 export default function Footer() {
@@ -83,90 +90,11 @@ export default function Footer() {
 
   return (
     <footer className="bg-luxury text-white/80">
-
-    
-
       {/* Main footer grid */}
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
-
           {/* Brand column */}
           <div className="lg:col-span-2">
             <Link to="/" className="font-serif text-2xl tracking-[0.3em] text-white uppercase">
               LUXORA
             </Link>
-            <p className="text-sm text-white/50 mt-4 leading-relaxed max-w-xs">
-              Luxury fashion and accessories curated for the discerning few. Timeless elegance, delivered worldwide.
-            </p>
-
-            {/* Socials */}
-            <div className="flex gap-3 mt-6">
-              {SOCIALS.map(s => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={s.label}
-                  className="w-9 h-9 border border-white/20 rounded-sm flex items-center justify-center text-white/50 hover:text-gold hover:border-gold transition-all"
-                >
-                  {s.icon}
-                </a>
-              ))}
-            </div>
-
-            {/* Trust badges */}
-            <div className="flex flex-wrap gap-4 mt-8 text-xs text-white/40">
-              {[["🔒","Secure Checkout"],["🚚","Free Shipping $100+"],["🔄","30-Day Returns"]].map(([icon, text]) => (
-                <div key={text} className="flex items-center gap-1.5">
-                  <span>{icon}</span><span>{text}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Link columns */}
-          {Object.entries(LINKS).map(([heading, links]) => (
-            <div key={heading}>
-              <p className="text-xs tracking-widest uppercase text-white font-medium mb-5">{heading}</p>
-              <ul className="space-y-3">
-                {links.map(l => (
-                  <li key={l.label}>
-                    <Link
-                      to={l.to}
-                      className="text-sm text-white/50 hover:text-gold transition-colors"
-                    >
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Bottom bar */}
-      <div className="border-t border-white/10">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-white/30">
-            © {new Date().getFullYear()} LUXORA. All rights reserved.
-          </p>
-
-          {/* Payment icons */}
-          <div className="flex items-center gap-2">
-            {PAYMENT_ICONS.map(p => (
-              <span
-                key={p}
-                className="text-[10px] text-white/30 border border-white/10 px-2 py-1 rounded-sm tracking-wide"
-              >
-                {p}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-
-    </footer>
-  );
-}

@@ -1,11 +1,12 @@
 import { useAuth } from "../../context/AuthContext";
+import { Home, Package, Heart, MapPin, Settings, LogOut } from 'lucide-react';
 
 const TABS = [
-  { id: "overview",  icon: "🏠", label: "Dashboard"        },
-  { id: "orders",    icon: "📦", label: "My Orders"         },
-  { id: "wishlist",  icon: "♥",  label: "Wishlist"          },
-  { id: "addresses", icon: "📍", label: "Addresses"         },
-  { id: "settings",  icon: "⚙️", label: "Account Settings"  },
+  { id: "overview",  icon: Home,     label: "Dashboard"        },
+  { id: "orders",    icon: Package,  label: "My Orders"        },
+  { id: "wishlist",  icon: Heart,    label: "Wishlist"         },
+  { id: "addresses", icon: MapPin,   label: "Addresses"        },
+  { id: "settings",  icon: Settings, label: "Account Settings" },
 ];
 
 export default function DashboardSidebar({ activeTab, onTabChange }) {
@@ -28,18 +29,22 @@ export default function DashboardSidebar({ activeTab, onTabChange }) {
         </div>
 
         {/* Nav tabs */}
-        {TABS.map(t => (
-          <button
-            key={t.id}
-            onClick={() => onTabChange(t.id)}
-            className={`flex items-center gap-3 px-5 py-3.5 w-full text-left text-sm border-t border-champagne transition-colors cursor-pointer font-sans bg-transparent border-l-0 border-r-0 border-b-0 ${
-              activeTab === t.id ? "text-gold bg-gold/5" : "text-luxury hover:text-gold"
-            }`}
-            style={{ borderLeft: activeTab === t.id ? "3px solid #C9A84C" : "3px solid transparent" }}
-          >
-            <span>{t.icon}</span>{t.label}
-          </button>
-        ))}
+        {TABS.map(t => {
+          const Icon = t.icon;
+          return (
+            <button
+              key={t.id}
+              onClick={() => onTabChange(t.id)}
+              className={`flex items-center gap-3 px-5 py-3.5 w-full text-left text-sm border-t border-champagne transition-colors cursor-pointer font-sans bg-transparent border-l-0 border-r-0 border-b-0 ${
+                activeTab === t.id ? "text-gold bg-gold/5" : "text-luxury hover:text-gold"
+              }`}
+              style={{ borderLeft: activeTab === t.id ? "3px solid #C9A84C" : "3px solid transparent" }}
+            >
+              <Icon size={18} />
+              {t.label}
+            </button>
+          );
+        })}
 
         {/* Logout */}
         <button
@@ -47,7 +52,8 @@ export default function DashboardSidebar({ activeTab, onTabChange }) {
           className="flex items-center gap-3 px-5 py-3.5 w-full text-left text-sm border-t border-champagne text-muted hover:text-red-500 transition-colors cursor-pointer font-sans bg-transparent border-l-0 border-r-0 border-b-0"
           style={{ borderLeft: "3px solid transparent" }}
         >
-          🚪 Logout
+          <LogOut size={18} />
+          Logout
         </button>
       </div>
     </aside>

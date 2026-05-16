@@ -1,10 +1,11 @@
 import { useStore } from "../../context/StoreContext";
 import OrderHistory from "./OrderHistory";
+import { Package, MapPin, CreditCard, Heart } from 'lucide-react';
 
 const STATS = [
-  { label: "Total Orders", value: 12,     icon: "📦" },
-  { label: "Addresses",    value: 3,       icon: "📍" },
-  { label: "Balance",      value: "$150",  icon: "💳" },
+  { label: "Total Orders", value: 12,     icon: Package },
+  { label: "Addresses",    value: 3,      icon: MapPin },
+  { label: "Balance",      value: "$150", icon: CreditCard },
 ];
 
 export default function DashboardStats() {
@@ -12,7 +13,7 @@ export default function DashboardStats() {
 
   const stats = [
     STATS[0],
-    { label: "Wishlist", value: wishlist.length, icon: "♥" },
+    { label: "Wishlist", value: wishlist.length, icon: Heart },
     STATS[1],
     STATS[2],
   ];
@@ -21,15 +22,18 @@ export default function DashboardStats() {
     <div>
       {/* Stat cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        {stats.map(s => (
-          <div key={s.label} className="card p-5">
-            <div className="flex justify-between items-start mb-3">
-              <p className="text-xs tracking-widest uppercase text-muted">{s.label}</p>
-              <span className="text-xl">{s.icon}</span>
+        {stats.map(s => {
+          const Icon = s.icon;
+          return (
+            <div key={s.label} className="card p-5">
+              <div className="flex justify-between items-start mb-3">
+                <p className="text-xs tracking-widest uppercase text-muted">{s.label}</p>
+                <Icon size={20} className="text-gold" />
+              </div>
+              <p className="text-2xl font-semibold">{s.value}</p>
             </div>
-            <p className="text-2xl font-semibold">{s.value}</p>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Recent orders preview */}

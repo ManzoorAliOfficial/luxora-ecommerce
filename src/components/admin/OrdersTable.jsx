@@ -11,12 +11,7 @@ const STATUS_STYLE = {
   Pending:   "bg-orange-100 text-orange-700",
 };
 
-/**
- * Props:
- *   compact?: boolean  — when true renders the trimmed "Recent Orders" version
- *                        used on the overview dashboard (no Action column, no heading)
- *   onViewAll?: fn     — callback for the "View All" link shown in compact mode
- */
+
 export default function OrdersTable({ compact = false, onViewAll }) {
   return (
     <>
